@@ -11,16 +11,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function mostrarPlatillo(platillo, id) {
     let fotoPlatillo;
-    if (platillo.foto) {
-        fotoPlatillo = "data:image/png;base64, " + platillo.foto;
+    if (platillo && platillo.foto) {
+        fotoPlatillo = platillo.foto.startsWith("data:") || platillo.foto.startsWith("http") || platillo.foto.startsWith("img/")
+            ? platillo.foto 
+            : "data:image/png;base64, " + platillo.foto;
     } else {
         fotoPlatillo = "img/no-image.png";
     }
 
-    // CORRECCIÓN: Usamos un '=' simple en lugar de '+=' para evitar la duplicación
     contenido = `
         <div class="card-panel recipe white row" id="${id}">
-        <img src="${fotoPlatillo}" height="100px" width="100px">
+            <img src="${fotoPlatillo}" height="100px" width="100px" alt="${platillo.nombre || 'Platillo'}">
             <div class="recipe-details">
                 <div class="recipe-title">
                     ${platillo.nombre}
@@ -69,6 +70,25 @@ const video = document.getElementById('video');
 const canvas = document.getElementById('canvas');
 const foto = document.getElementById('foto');
 const bntFoto = document.getElementById('btnFoto');
+
+bntFoto.addEventListener("click", function() {
+    navigator.mediaDevices
+        .getUserMedia({
+            video: {
+                facingMode: {
+                    ideal: "environment"
+                }
+            },
+            audio: false
+        })
+        .then((stream) => {
+            video.srcObject = stream;
+            video.play();
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+});
 
 video.setAttribute("height", height);
 streaming = true;
