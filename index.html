@@ -1,151 +1,165 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>elbarrigont</title>
-  <!-- materialize icons, css & js -->
+
+  <!-- Hojas de estilo locales e iconos -->
   <link type="text/css" href="css/materialize.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link type="text/css" href="css/styles.css" rel="stylesheet">
-  <script type="text/javascript" src="js/materialize.min.js"></script>
 
   <link rel="manifest" href="manifest.json">
 
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="application-name" content="barrigont">
-<meta name="apple-mobile-web-app-title" content="barrigont">
-<meta name="theme-color" content="#de00ff">
-<meta name="msapplication-navbutton-color" content="#de00ff">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Configuraciones Web App / PWA -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="barrigont">
+  <meta name="apple-mobile-web-app-title" content="barrigont">
+  <meta name="theme-color" content="#de00ff">
+  <meta name="msapplication-navbutton-color" content="#de00ff">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-<link rel="icon" type="image/png" sizes="16x16" href="icon-16x16.png">
-<link rel="apple-touch-icon" type="image/png" sizes="16x16" href="icon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="icon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="32x32" href="icon-32x32.png">
-<link rel="icon" type="image/png" sizes="48x48" href="icon-48x48.png">
-<link rel="apple-touch-icon" type="image/png" sizes="48x48" href="icon-48x48.png">
-<link rel="icon" type="image/png" sizes="64x64" href="icon-64x64.png">
-<link rel="apple-touch-icon" type="image/png" sizes="64x64" href="icon-64x64.png">
-<link rel="icon" type="image/png" sizes="96x96" href="icon-96x96.png">
-<link rel="apple-touch-icon" type="image/png" sizes="96x96" href="icon-96x96.png">
-<link rel="icon" type="image/png" sizes="128x128" href="icon-128x128.png">
-<link rel="apple-touch-icon" type="image/png" sizes="128x128" href="icon-128x128.png">
-<link rel="icon" type="image/png" sizes="144x144" href="icon-144x144.png">
-<link rel="apple-touch-icon" type="image/png" sizes="144x144" href="icon-144x144.png">
-<link rel="icon" type="image/png" sizes="152x152" href="icon-152x152.png">
-<link rel="apple-touch-icon" type="image/png" sizes="152x152" href="icon-152x152.png">
-<link rel="icon" type="image/png" sizes="180x180" href="icon-180x180.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192x192.png">
-<link rel="apple-touch-icon" type="image/png" sizes="192x192" href="icon-192x192.png">
-<link rel="icon" type="image/png" sizes="192x192" href="icon-192x192-maskable.png">
-<link rel="apple-touch-icon" type="image/png" sizes="192x192" href="icon-192x192-maskable.png">
-<link rel="icon" type="image/png" sizes="384x384" href="icon-384x384.png">
-<link rel="apple-touch-icon" type="image/png" sizes="384x384" href="icon-384x384.png">
-<link rel="icon" type="image/png" sizes="512x512" href="icon-512x512.png">
-<link rel="apple-touch-icon" type="image/png" sizes="512x512" href="icon-512x512.png">
-<link rel="icon" type="image/png" sizes="512x512" href="icon-512x512-maskable.png">
-<link rel="apple-touch-icon" type="image/png" sizes="512x512" href="icon-512x512-maskable.png">
-
+  <!-- Iconos -->
+  <link rel="icon" type="image/png" sizes="16x16" href="icon-16x16.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="16x16" href="icon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="icon-32x32.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="32x32" href="icon-32x32.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="icon-48x48.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="48x48" href="icon-48x48.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="icon-64x64.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="64x64" href="icon-64x64.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="icon-96x96.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="96x96" href="icon-96x96.png">
+  <link rel="icon" type="image/png" sizes="128x128" href="icon-128x128.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="128x128" href="icon-128x128.png">
+  <link rel="icon" type="image/png" sizes="144x144" href="icon-144x144.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="144x144" href="icon-144x144.png">
+  <link rel="icon" type="image/png" sizes="152x152" href="icon-152x152.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="152x152" href="icon-152x152.png">
+  <link rel="icon" type="image/png" sizes="180x180" href="icon-180x180.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192x192.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="192x192" href="icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192x192-maskable.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="192x192" href="icon-192x192-maskable.png">
+  <link rel="icon" type="image/png" sizes="384x384" href="icon-384x384.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="384x384" href="icon-384x384.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="icon-512x512.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="512x512" href="icon-512x512.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="icon-512x512-maskable.png">
+  <link rel="apple-touch-icon" type="image/png" sizes="512x512" href="icon-512x512-maskable.png">
 </head>
 <body class="grey lighten-4">
 
-  <!-- Menu superior -->
+  <!-- Menú superior -->
   <nav class="z-depth-0">
     <div class="nav-wrapper container">
-      <a href="">elbarrigont</span></a>
+      <a href="/" class="brand-logo">elbarrigont</a>
       <span class="right grey-text text-darken-1">
-        <i class="material-icons sidenav-trigger" data-target="side-menu">menu</i>
+        <i class="material-icons sidenav-trigger" data-target="side-menu" style="cursor:pointer;">menu</i>
       </span>
     </div>
   </nav>
 
-  <!-- Menu lateral -->
+  <!-- Menú lateral -->
   <ul id="side-menu" class="sidenav side-menu">
     <li><a class="subheader">elbarrigont</a></li>
     <li><a href="/" class="waves-effect">Inicio</a></li>
     <li><a href="pages/about.html" class="waves-effect">Acerca</a></li>
     <li><a href="pages/pedidos.html" class="waves-effect">Pedidos</a></li>
     <li><div class="divider"></div></li>
-    <li><a href="pages/contact.html" class="waves-effect">
-      <i class="material-icons">mail_outline</i>Contacto</a>
+    <li>
+      <a href="pages/contact.html" class="waves-effect">
+        <i class="material-icons">mail_outline</i>Contacto
+      </a>
     </li>
   </ul>
 
   <!-- Lista de platillos -->
-  <div class="recipes container grey-text text-darken-1">
-    
-  </div>
+  <div class="recipes container grey-text text-darken-1"></div>
 
-  <div class="center">
-    <a class="btn-floating btn-small btn-large add-btn sidenav-trigger" data-target="side-form">
+  <div class="center" style="margin-top: 20px;">
+    <a class="btn-floating btn-large add-btn sidenav-trigger" data-target="side-form">
       <i class="material-icons">add</i>
     </a>
   </div>
 
-  <!-- Agregar platillo -->
+  <!-- Formulario Agregar platillo -->
   <div id="side-form" class="sidenav side-form">
     <form class="add-recipe container section">
       <h6>Nuevo platillo</h6>
       <div class="divider"></div>
       <div class="input-field">
         <input placeholder="ejemplo: Pizza" id="title" type="text" class="validate">
-        <label for="title">Nombre</label>
+        <label for="title" class="active">Nombre</label>
       </div>
       <div class="input-field">
         <input placeholder="e.g. Tofu, mushroom, garlic" id="ingredients" type="text" class="validate">
-        <label for="ingredients">Ingredientes</label>
+        <label for="ingredients" class="active">Ingredientes</label>
       </div>
       <div class="input-field">
         <input placeholder="e.g. $50" id="price" type="text" class="validate">
-        <label for="price">Precio</label>
+        <label for="price" class="active">Precio</label>
       </div>
       
-      <!-- CÓDIGO DE LA CÁMARA IMPLEMENTADO AQUÍ -->
-      <button id="btnFoto">Imagen</button>
-      <div id="camara">
-          <video id="video">No hay video disponible</video>
+      <!-- Sección de la cámara -->
+      <button id="btnFoto" type="button" class="btn waves-effect waves-light">Imagen</button>
+      <div id="camara" style="margin-top: 10px;">
+        <video id="video" style="width: 100%; display: none;" autoplay playsinline>No hay video disponible</video>
       </div>
-      <canvas id="canvas"></canvas>
-      <div id="salida">
-          <img id="foto" src="" alt="Foto del platillo">
+      <canvas id="canvas" style="display: none;"></canvas>
+      <div id="salida" style="margin-top: 10px;">
+        <img id="foto" src="" alt="Foto del platillo" style="max-width: 100%; display: none;">
       </div>
       
-      <div class="input-field center">
-        <button class="btn-small">Agregar</button>
+      <div class="input-field center" style="margin-top: 20px;">
+        <button type="submit" class="btn-small waves-effect waves-light">Agregar</button>
       </div>
     </form>
   </div>
 
+  <!-- Scripts JS de Materialize, Firebase y Scripts locales -->
+  <script type="text/javascript" src="js/materialize.min.js"></script>
   <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/6.0.1/firebase-firestore.js"></script>
   <script src="js/firebase.js"></script>
   <script src="js/index.js"></script>
   <script src="js/db.js"></script>
   
-  <!-- SCRIPT DE LA CÁMARA INTEGRADO CORREGIDO (Sin variables duplicadas) -->
+  <!-- Lógica de la cámara corregida -->
   <script>
-    bntFoto.addEventListener("click", function(ev) {
-        ev.preventDefault(); // Evita que el formulario intente enviarse y recargue la página
-        navigator.mediaDevices
-            .getUserMedia({
-                video: true,
-                audio: false
-            })
+    document.addEventListener("DOMContentLoaded", function() {
+      const btnFoto = document.getElementById("btnFoto");
+      const video = document.getElementById("video");
+
+      if (btnFoto && video) {
+        btnFoto.addEventListener("click", function(ev) {
+          ev.preventDefault();
+          navigator.mediaDevices
+            .getUserMedia({ video: true, audio: false })
             .then((stream) => {
-                video.srcObject = stream;
-                video.play();
+              video.style.display = "block";
+              video.srcObject = stream;
+              video.play();
             })
+            .catch((err) => {
+              console.error("Error al acceder a la cámara:", err);
+            });
+        });
+      }
     });
   </script>
   
+  <!-- Registro de Service Worker -->
   <script>
-      if (typeof navigator.serviceWorker !== 'undefined') {
-          navigator.serviceWorker.register('sw.js')
-      }
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js')
+        .then(reg => console.log('Service Worker registrado con éxito:', reg))
+        .catch(err => console.error('Error al registrar Service Worker:', err));
+    }
   </script>
 </body>
 </html>
