@@ -1,226 +1,130 @@
 document.addEventListener('DOMContentLoaded', function() {
-
-  // nav menu
+  // Inicialización de Menús Laterales
   const menus = document.querySelectorAll('.side-menu');
   M.Sidenav.init(menus, { edge: 'right' });
 
-  // add recipe form
   const forms = document.querySelectorAll('.side-form');
   M.Sidenav.init(forms, { edge: 'left' });
 
+  M.AutoInit();
 });
 
 let contenidoLista = '';
+let mapInstance = null; // Guardar la referencia del mapa para evitar re-inicialización
 
+// Cargar platillos desde Firestore
 db.collection("platillos").onSnapshot((datos) => {
-    // Se inicializa el contenido con la opción por defecto en cada cambio
-    contenidoLista = '<option value="" disabled selected>Selecciona un platillo</option>';
+  contenidoLista = '<option value="" disabled selected>Selecciona un platillo</option>';
 
-    datos.docChanges().forEach((registro) => {
-        if (registro.type === "added") {
-            agregarALista(registro.doc.data(), registro.doc.id);
-        }
-    });
-    var elems = document.querySelectorAll('select');
-    M.FormSelect.init(elems);
+  datos.docChanges().forEach((registro) => {
+    if (registro.type === "added") {
+      agregarALista(registro.doc.data(), registro.doc.id);
+    }
+  });
+  
+  const elems = document.querySelectorAll('select');
+  M.FormSelect.init(elems);
 });
 
 function agregarALista(platillo, id) {
-    contenidoLista += `<option value='${id}'>
-        ${platillo.nombre}
-    </option>`;
-    // Se corrigió el ID a 'ListaPlatillos' para que coincida con el formulario
-    document.getElementById("ListaPlatillos").innerHTML = contenidoLista;
+  contenidoLista += `<option value='${id}'>${platillo.nombre}</option>`;
+  document.getElementById("ListaPlatillos").innerHTML = contenidoLista;
 }
 
-// --- SE AGREGÓ LA LOGÍSTICA DEL ENVÍO DEL PEDIDO ---
+// Envío del Pedido
 const formPedido = document.querySelector("#form-pedido");
 
-formPedido.addEventListener("submit", (e) => {
+if (formPedido) {
+  formPedido.addEventListener("submit", (e) => {
     e.preventDefault();
 
     const pedidoNuevo = {
-        platillo: formPedido.ListaPlatillos.value,
-        nombrec: formPedido.nombre.value,
-        direccion: formPedido.direccion.value
+      platillo: formPedido.ListaPlatillos.value,
+      nombrec: formPedido.nombre.value,
+      direccion: formPedido.direccion.value
     };
 
     db.collection("pedidos")
-        .add(pedidoNuevo)
-        .then(() => {
-            formPedido.reset();
+      .add(pedidoNuevo)
+      .then(() => {
+        formPedido.reset();
 
-            const select = document.querySelector("#ListaPlatillos");
-            select.selectedIndex = 0;
-            M.FormSelect.init(select);
+        const select = document.querySelector("#ListaPlatillos");
+        select.selectedIndex = 0;
+        M.FormSelect.init(select);
 
-            alert("Pedido agregado");
-        })
-        .catch((error) => {
-            console.error("Error al agregar pedido:", error);
-            alert("Error al agregar pedido");
-        });
-});
-
-// --- CÓDIGO DE GEOLOCALIZACIÓN IMPLEMENTADO ---
-
-M.AutoInit();
-
-document.getElementById("obtenerUbicacion").addEventListener("click", function () {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(exito, error);
-    } else {
-        alert("La geolocalización no es compatible con este navegador.");
-    }
-});
-
-function exito(posicion) {
-    let latitud = posicion.coords.latitude;
-    let longitud = posicion.coords.longitude;
-
-    fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitud}&lon=${longitud}&format=json`, {
-        headers: {
-            "User-Agent": "UberEatsCUDECHelheim-k (helheimkika@hotmail.com)"
-        }
-    })
-    .then(respuesta => respuesta.json())
-    .then(data => {
-        let ciudad = data.address.city || data.address.town || data.address.village || "";
-        let pais = data.address.country || "";
-        let direccionTexto = `${ciudad}, ${pais}`;
-        document.getElementById("direccion").value = direccionTexto;
-        
-        var map = L.map('mapa').setView([latitud, longitud], 13);
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-        var marker = L.marker([latitud, longitud]).addTo(map);
-
-        //Generar código QR
-        var qrcode = new QRCode("test", {
-            text: direccionTexto, //Texto para generar el código: nombre del platillo/dirección
-            width: 128,
-            height: 128,
-            colorDark : "#000000",
-            colorLight : "#ffffff",
-            correctLevel : QRCode.CorrectLevel.H
-        });
-
-        //Borrar el código QR
-        qrcode.clear();
-    })
-    .catch(error => {
-        console.error("Error:", error);
-    });
+        alert("Pedido agregado con éxito");
+      })
+      .catch((error) => {
+        console.error("Error al agregar pedido:", error);
+        alert("Error al agregar el pedido");
+      });
+  });
 }
 
-function error(error) {
-    console.log(error);
-}document.addEventListener('DOMContentLoaded', function() {
-
-  // nav menu
-  const menus = document.querySelectorAll('.side-menu');
-  M.Sidenav.init(menus, { edge: 'right' });
-
-  // add recipe form
-  const forms = document.querySelectorAll('.side-form');
-  M.Sidenav.init(forms, { edge: 'left' });
-
-});
-
-let contenidoLista = '';
-
-db.collection("platillos").onSnapshot((datos) => {
-    // Se inicializa el contenido con la opción por defecto en cada cambio
-    contenidoLista = '<option value="" disabled selected>Selecciona un platillo</option>';
-
-    datos.docChanges().forEach((registro) => {
-        if (registro.type === "added") {
-            agregarALista(registro.doc.data(), registro.doc.id);
-        }
-    });
-    var elems = document.querySelectorAll('select');
-    M.FormSelect.init(elems);
-});
-
-function agregarALista(platillo, id) {
-    contenidoLista += `<option value='${id}'>
-        ${platillo.nombre}
-    </option>`;
-    // Se corrigió el ID a 'ListaPlatillos' para que coincida con el formulario
-    document.getElementById("ListaPlatillos").innerHTML = contenidoLista;
+// Geolocalización y Mapa
+const btnUbicacion = document.getElementById("obtenerUbicacion");
+if (btnUbicacion) {
+  btnUbicacion.addEventListener("click", function () {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(exito, error);
+    } else {
+      alert("La geolocalización no es compatible con este navegador.");
+    }
+  });
 }
 
-// --- SE AGREGÓ LA LOGÍSTICA DEL ENVÍO DEL PEDIDO ---
-const formPedido = document.querySelector("#form-pedido");
-
-formPedido.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    const pedidoNuevo = {
-        platillo: formPedido.ListaPlatillos.value,
-        nombrec: formPedido.nombre.value,
-        direccion: formPedido.direccion.value
-    };
-
-    db.collection("pedidos")
-        .add(pedidoNuevo)
-        .then(() => {
-            formPedido.reset();
-
-            const select = document.querySelector("#ListaPlatillos");
-            select.selectedIndex = 0;
-            M.FormSelect.init(select);
-
-            alert("Pedido agregado");
-        })
-        .catch((error) => {
-            console.error("Error al agregar pedido:", error);
-            alert("Error al agregar pedido");
-        });
-});
-
-// --- CÓDIGO DE GEOLOCALIZACIÓN IMPLEMENTADO ---
-
-M.AutoInit();
-
-document.getElementById("obtenerUbicacion").addEventListener("click", function () {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(exito, error);
-    } else {
-        alert("La geolocalización no es compatible con este navegador.");
-    }
-});
-
 function exito(posicion) {
-    let latitud = posicion.coords.latitude;
-    let longitud = posicion.coords.longitude;
+  let latitud = posicion.coords.latitude;
+  let longitud = posicion.coords.longitude;
 
-    fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitud}&lon=${longitud}&format=json`, {
-        headers: {
-            "User-Agent": "UberEatsCUDECHelheim-k (helheimkika@hotmail.com)"
-        }
-    })
-    .then(respuesta => respuesta.json())
-    .then(data => {
-        let ciudad = data.address.city || data.address.town || data.address.village || "";
-        let pais = data.address.country || "";
-        document.getElementById("direccion").value = `${ciudad}, ${pais}`;
-        
-        var map = L.map('mapa').setView([latitud, longitud], 13);
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-        var marker = L.marker([latitud, longitud]).addTo(map);
-    })
-    .catch(error => {
-        console.error("Error:", error);
-    });
+  fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitud}&lon=${longitud}&format=json`, {
+    headers: {
+      "User-Agent": "UberEatsCUDECHelheim-k (helheimkika@hotmail.com)"
+    }
+  })
+  .then(respuesta => respuesta.json())
+  .then(data => {
+    let ciudad = data.address.city || data.address.town || data.address.village || "";
+    let pais = data.address.country || "";
+    let direccionTexto = `${ciudad}, ${pais}`;
+    
+    document.getElementById("direccion").value = direccionTexto;
+
+    // Control de re-inicialización del mapa
+    if (mapInstance !== null) {
+      mapInstance.remove();
+    }
+
+    mapInstance = L.map('mapa').setView([latitud, longitud], 13);
+    
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(mapInstance);
+
+    L.marker([latitud, longitud]).addTo(mapInstance);
+
+    // Generar Código QR (si el contenedor existe)
+    const qrContainer = document.getElementById("test");
+    if (qrContainer) {
+      qrContainer.innerHTML = ""; // Limpiar QR previo
+      new QRCode(qrContainer, {
+        text: direccionTexto,
+        width: 128,
+        height: 128,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+      });
+    }
+  })
+  .catch(err => {
+    console.error("Error obteniendo la dirección:", err);
+  });
 }
 
 function error(err) {
-    alert("No se pudo obtener la ubicación.");
-    console.error(err);
+  alert("No se pudo obtener la ubicación.");
+  console.error(err);
 }
