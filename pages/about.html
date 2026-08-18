@@ -1,45 +1,65 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Food Ninja</title>
-  <!-- materialize icons, css & js -->
-  <link type="text/css" href="/css/materialize.min.css" rel="stylesheet">
+  <title>Acerca de - elbarrigont</title>
+  <!-- Materialize CSS & Icons -->
+  <link type="text/css" href="../css/materialize.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link type="text/css" href="/css/styles.css" rel="stylesheet">
-  <script type="text/javascript" src="/js/materialize.min.js"></script>
+  <link type="text/css" href="../css/styles.css" rel="stylesheet">
 </head>
 <body class="grey lighten-4">
 
-  <!-- top nav -->
+  <!-- Barra superior -->
   <nav class="z-depth-0">
     <div class="nav-wrapper container">
-      <a href="/">Food<span>Ninja</span></a>
+      <a href="/" class="brand-logo">elbarrigont</a>
       <span class="right grey-text text-darken-1">
-        <i class="material-icons sidenav-trigger" data-target="side-menu">menu</i>
+        <i class="material-icons sidenav-trigger" data-target="side-menu" style="cursor:pointer;">menu</i>
       </span>
     </div>
   </nav>
 
-  <!-- side nav -->
+  <!-- Barra lateral -->
   <ul id="side-menu" class="sidenav side-menu">
-    <li><a class="subheader">FOODNINJA</a></li>
-    <li><a href="/" class="waves-effect">Home</a></li>
-    <li><a href="/pages/about.html" class="waves-effect">About</a></li>
+    <li><a class="subheader">elbarrigont</a></li>
+    <li><a href="/" class="waves-effect">Inicio</a></li>
+    <li><a href="about.html" class="waves-effect">Acerca</a></li>
+    <li><a href="pedidos.html" class="waves-effect">Pedidos</a></li>
     <li><div class="divider"></div></li>
-    <li><a href="/pages/contact.html" class="waves-effect">
-      <i class="material-icons">mail_outline</i>Contact</a>
+    <li><a href="contact.html" class="waves-effect">
+      <i class="material-icons">mail_outline</i>Contacto</a>
     </li>
   </ul>
 
-  <!-- content -->
-  <div class="container grey-text">
-    <h5 class="center">About Food Ninja</h5>
-    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ducimus, porro voluptatum illum veniam eaque sunt sit labore provident eligendi! Voluptate amet suscipit inventore unde maxime atque impedit officia nobis laboriosam!</p>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam voluptatibus omnis, ea doloremque exercitationem id necessitatibus. Voluptatem officiis cupiditate commodi totam, hic laborum est ducimus amet iure, non dignissimos illo.</p>
+  <!-- Contenido principal -->
+  <div class="container center-align" style="margin-top: 40px;">
+    <!-- Logo -->
+    <img src="../img/no-image.png" alt="Logo elbarrigont" style="max-width: 150px; margin-bottom: 20px;">
+    
+    <!-- Nombre de la app -->
+    <h4 class="purple-text text-darken-2">elbarrigont</h4>
+    
+    <!-- Versión -->
+    <p class="grey-text">Versión 1.0.0</p>
+
+    <!-- Descripción -->
+    <div class="card-panel white z-depth-1" style="margin-top: 20px;">
+      <p class="grey-text text-darken-1">
+        elbarrigont es una aplicación pensada para gestionar tus platillos y pedidos de manera sencilla y rápida. 
+        Nuestro objetivo es ofrecerte una experiencia práctica y atractiva para que disfrutes administrando tu menú.
+      </p>
+    </div>
   </div>
 
-  <script src="/js/ui.js"></script>
+  <!-- Scripts -->
+  <script type="text/javascript" src="../js/materialize.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const menus = document.querySelectorAll('.side-menu');
+      M.Sidenav.init(menus, {edge: 'left'});
+    });
+  </script>
 </body>
 </html>
