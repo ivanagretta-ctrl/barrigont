@@ -61,38 +61,48 @@ function agregarLista(platillo, id) {
 }
 
 
-// Camara - VARIABLES DECLARADAS PARA CORREGIR EL ERROR
+// ------------------- CÁMARA -------------------
 
 let streaming = false;
 const width = 320;
 let height = 0;
+
 const video = document.getElementById('video');
 const canvas = document.getElementById('canvas');
 const foto = document.getElementById('foto');
-const bntFoto = document.getElementById('btnFoto');
+const btnCamara = document.getElementById('btnCamara');
+const btnCapturar = document.getElementById('btnCapturar');
+const btnLimpiar = document.getElementById('btnLimpiar');
 
-bntFoto.addEventListener("click", function() {
-    navigator.mediaDevices
-        .getUserMedia({
-            video: {
-                facingMode: {
-                    ideal: "environment"
-                }
-            },
+// Iniciar cámara
+btnCamara.addEventListener("click", async (e) => {
+    e.preventDefault();
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: "environment" }, // cámara trasera
             audio: false
-        })
-        .then((stream) => {
-            video.srcObject = stream;
-            video.play();
-        })
-        .catch((error) => {
-            console.log(error);
         });
+        video.srcObject = stream;
+        video.play();
+    } catch (error) {
+        console.error("Error al acceder a la cámara:", error);
+        alert("No se pudo abrir la cámara. Verifica permisos y HTTPS.");
+    }
 });
 
-video.setAttribute("height", height);
-streaming = true;
+// Ajustar tamaño cuando el video esté listo
+video.addEventListener("canplay", () => {
+    if (!streaming) {
+        height = video.videoHeight / (video.videoWidth / width);
+        video.setAttribute("width", width);
+        video.setAttribute("height", height);
+        canvas.setAttribute("width", width);
+        canvas.setAttribute("height", height);
+        streaming = true;
+    }
+});
 
+// Capturar foto
 function tomarFoto() {
     const contexto = canvas.getContext("2d");
     if (width && height) {
@@ -101,11 +111,39 @@ function tomarFoto() {
         contexto.drawImage(video, 0, 0, width, height);
         const fotoFinal = canvas.toDataURL("image/png");
         foto.setAttribute("src", fotoFinal);
+        document.getElementById("fotoInput").value = fotoFinal;
+
+        // Ocultar cuadro de cámara
+        document.getElementById("Camera").style.display = "none";
     } else {
         limpiarFoto();
     }
 }
 
+// Limpiar foto y reiniciar cámara
 function limpiarFoto() {
-    
+    foto.setAttribute("src", "img/default.jpg");
+    document.getElementById("fotoInput").value = "img/default.jpg";
+
+    if (video.srcObject) {
+        const tracks = video.srcObject.getTracks();
+        tracks.forEach(track => track.stop());
+        video.srcObject = null;
+    }
+    const cameraContainer = document.getElementById("Camera");
+    cameraContainer.style.display = "block";
+    video.pause();
+    video.removeAttribute("src");
+    video.load();
 }
+
+// Botones
+btnCapturar.addEventListener("click", (e) => {
+    e.preventDefault();
+    tomarFoto();
+});
+
+btnLimpiar.addEventListener("click", (e) => {
+    e.preventDefault();
+    limpiarFoto();
+});

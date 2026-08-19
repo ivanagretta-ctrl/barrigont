@@ -33,34 +33,65 @@ function agregarALista(platillo, id) {
 
 // Envío del Pedido
 const formPedido = document.querySelector("#form-pedido");
+formPedido.addEventListener("submit", (e) => {
 
-if (formPedido) {
-  formPedido.addEventListener("submit", (e) => {
     e.preventDefault();
 
+    //Obtener el select
+    const select = document.querySelector("#ListaPlatillos");
+
+    //Obtener el nombre del platillo seleccionado
+    const nombrePlatillo = select.options[select.selectedIndex].text;
+
     const pedidoNuevo = {
-      platillo: formPedido.ListaPlatillos.value,
-      nombrec: formPedido.nombre.value,
-      direccion: formPedido.direccion.value
+
+        platillo: formPedido.ListaPlatillos.value,
+        nombrec: formPedido.nombre.value,
+        direccion: formPedido.direccion.value
+
     };
 
     db.collection("pedidos")
-      .add(pedidoNuevo)
-      .then(() => {
-        formPedido.reset();
+        .add(pedidoNuevo)
+        .then(() => {
 
-        const select = document.querySelector("#ListaPlatillos");
-        select.selectedIndex = 0;
-        M.FormSelect.init(select);
+            //Limpiar QR anterior
+            document.getElementById("qr").innerHTML = "";
 
-        alert("Pedido agregado con éxito");
-      })
-      .catch((error) => {
-        console.error("Error al agregar pedido:", error);
-        alert("Error al agregar el pedido");
-      });
-  });
-}
+            //Crear nuevo QR con el nombre del platillo
+            const qrcode = new QRCode("qr", {
+
+                text: `Platillo: ${nombrePlatillo}
+                        Nombre: ${formPedido.nombre.value}`,
+                width: 128,
+                height: 128,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+
+            });
+
+            formPedido.reset();
+
+            //Regresar el select a su opción inicial
+            select.selectedIndex = 0;
+            M.FormSelect.init(select);
+
+            alert("Pedido agregado");
+
+        })
+        .catch((error) => {
+
+            console.error("Error al agregar pedido:", error);
+            alert("Error al agregar pedido");
+
+        });
+
+});
+
+
+M.AutoInit();
+
 
 // Geolocalización y Mapa
 const btnUbicacion = document.getElementById("obtenerUbicacion");
